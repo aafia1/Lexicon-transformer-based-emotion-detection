@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lexicon — AI Emotion Detection</title>
+<meta name="description" content="Detect the emotion behind any text in real time, powered by a pretrained transformer model." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div class="bg-wash" id="bgWash" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">L</span>
+    <span class="brand-name">Lexicon</span>
+  </div>
+  <div class="topbar-right">
+    <span class="status-chip" id="statusChip"><span class="dot"></span> checking API…</span>
+    <button class="icon-btn" id="themeToggle" title="Toggle theme" aria-label="Toggle light and dark theme">
+      <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.36 6.36-.7-.7M6.34 6.34l-.7-.7m12.72 0-.7.7M6.34 17.66l-.7.7M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Z"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="page">
+
+  <section class="hero">
+    <p class="eyebrow">Six-class emotion classifier · Transformer-based NLP</p>
+    <h1 class="hero-title">Every sentence carries<br><em>a feeling.</em> We read it.</h1>
+    <p class="hero-sub">Paste any line of text below. A pretrained transformer model scores it across the full emotional spectrum in real time, with keyword-based guardrails for extra accuracy.</p>
+
+    <!-- Signature element: the emotion spectrometer -->
+    <div class="spectrometer" id="spectrometer" aria-hidden="true">
+      <div class="spectrometer-segment" data-emotion="anger"><span>Anger</span></div>
+      <div class="spectrometer-segment" data-emotion="hate"><span>Hate</span></div>
+      <div class="spectrometer-segment" data-emotion="sadness"><span>Sadness</span></div>
+      <div class="spectrometer-segment" data-emotion="surprise"><span>Surprise</span></div>
+      <div class="spectrometer-segment" data-emotion="love"><span>Love</span></div>
+      <div class="spectrometer-segment" data-emotion="happiness"><span>Happiness</span></div>
+    </div>
+  </section>
+
+  <section class="console-section">
+    <div class="console">
+      <div class="console-head">
+        <span class="console-label">INPUT</span>
+        <span class="char-count" id="charCount">0 / 2000</span>
+      </div>
+      <textarea id="textInput" class="console-input" maxlength="2000"
+        placeholder="Type how you feel… e.g. &quot;I can't believe you did this, I'm furious.&quot;"></textarea>
+
+      <div class="console-actions">
+        <div class="sample-chips" id="sampleChips">
+          <button class="chip" data-text="I adore everything about you, this is perfect.">❤️ Love</button>
+          <button class="chip" data-text="I can't believe this happened, I'm so angry right now!">😠 Anger</button>
+          <button class="chip" data-text="Wow, I did not see that coming at all!">😲 Surprise</button>
+          <button class="chip" data-text="I feel so alone and heartbroken today.">😢 Sadness</button>
+        </div>
+        <div class="action-buttons">
+          <button class="btn btn-ghost" id="clearBtn">Clear</button>
+          <button class="btn btn-primary" id="analyzeBtn">
+            <span id="analyzeLabel">Analyze emotion</span>
+            <span class="spinner" id="spinner" hidden></span>
+          </button>
+        </div>
+      </div>
+      <p class="error-msg" id="errorMsg" hidden></p>
+    </div>
+
+    <div class="result-panel" id="resultPanel" hidden>
+      <div class="result-card" id="resultCard">
+        <div class="result-emoji" id="resultEmoji">🙂</div>
+        <div class="result-info">
+          <h2 class="result-label" id="resultLabel">—</h2>
+          <p class="result-message" id="resultMessage">—</p>
+        </div>
+        <div class="gauge-wrap">
+          <svg viewBox="0 0 120 70" class="gauge">
+            <path d="M10,65 A50,50 0 0,1 110,65" class="gauge-track" />
+            <path d="M10,65 A50,50 0 0,1 110,65" class="gauge-fill" id="gaugeFill" />
+          </svg>
+          <div class="gauge-value"><span id="confidenceValue">0</span>%<small>confidence</small></div>
+        </div>
+      </div>
+
+      <div class="distribution" id="distribution">
+        <h3 class="panel-heading">Emotion distribution</h3>
+        <div class="bars" id="bars"></div>
+      </div>
+
+      <div class="meta-strip">
+        <div class="meta-item"><span class="meta-val" id="metaWords">0</span><span class="meta-key">words</span></div>
+        <div class="meta-item"><span class="meta-val" id="metaLatency">0ms</span><span class="meta-key">latency</span></div>
+        <div class="meta-item"><span class="meta-val" id="metaModel">DistilBERT</span><span class="meta-key">model</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="history-section">
+    <div class="history-head">
+      <h3 class="panel-heading">Session history</h3>
+      <button class="btn btn-ghost btn-small" id="clearHistoryBtn">Clear</button>
+    </div>
+    <div class="history-list" id="historyList">
+      <p class="empty-state">Your analyzed lines will appear here.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="page-footer">
+  <p>Lexicon — Emotion Detection System · Built on a pretrained DistilBERT transformer.</p>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>
