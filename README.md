@@ -120,9 +120,10 @@ First run downloads the model (~260MB, cached after). Open **http://localhost:50
 
 ---
 
+
 ## 📜 License
 
-MIT © [Aafia Azhar](https://github.com/aafia1)
+This project is licensed under the MIT License — see [`LICENSE`](LICENSE) for details.
 
 ---
 
