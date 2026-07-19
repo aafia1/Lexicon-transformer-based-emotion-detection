@@ -80,6 +80,12 @@ First run downloads the model (~260MB, cached after). Open **http://localhost:50
 
 ---
 
+
+## 📸 Preview
+
+
+---
+
 ## 📡 API reference
 
 ### `POST /api/predict`
