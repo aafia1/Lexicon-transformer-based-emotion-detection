@@ -82,6 +82,12 @@ First run downloads the model (~260MB, cached after). Open **http://localhost:50
 
 
 ## 📸 Preview
+<img width="1000" height="500" alt="1" src="https://github.com/user-attachments/assets/d7677111-76af-49ef-8bda-db0f288e276a" />
+<img width="1000" height="500" alt="2" src="https://github.com/user-attachments/assets/8355267d-4438-47bb-83e0-e8eeaaf8cf90" />
+<img width="1000" height="500" alt="3" src="https://github.com/user-attachments/assets/40f03ab4-d713-408f-8440-44479ec87bf2" />
+<img width="1000" height="500" alt="5" src="https://github.com/user-attachments/assets/0843aa8e-eef0-40f2-8746-5effd992cca5" />
+<img width="1000" height="500" alt="7" src="https://github.com/user-attachments/assets/44387799-c10c-4680-baa7-36c08cf13a4f" />
+<img width="1000" height="500" alt="8" src="https://github.com/user-attachments/assets/8ab67918-b9de-4429-9a84-f7f284cab5ab" />
 
 
 ---
